@@ -1,0 +1,14 @@
+com/mycompany/sistemadegestiohotelraul/model/Connexio.class
+com/mycompany/sistemadegestiohotelraul/SecondaryController.class
+com/mycompany/sistemadegestiohotelraul/PrimaryController.class
+com/mycompany/sistemadegestiohotelraul/model/Client.class
+com/mycompany/sistemadegestiohotelraul/model/Empleat.class
+com/mycompany/sistemadegestiohotelraul/model/Model.class
+com/mycompany/sistemadegestiohotelraul/model/Reserva.class
+com/mycompany/sistemadegestiohotelraul/model/Factura.class
+module-info.class
+com/mycompany/sistemadegestiohotelraul/App.class
+com/mycompany/sistemadegestiohotelraul/model/Persona.class
+com/mycompany/sistemadegestiohotelraul/model/Tasca.class
+com/mycompany/sistemadegestiohotelraul/TascaController.class
+com/mycompany/sistemadegestiohotelraul/model/Habitacio.class

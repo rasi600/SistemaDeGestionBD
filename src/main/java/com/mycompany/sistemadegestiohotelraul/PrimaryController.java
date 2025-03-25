@@ -25,7 +25,7 @@ public class PrimaryController {
 
     @FXML ComboBox<Persona> lista;
     @FXML TextField id_persona, nom, cognoms, adreça, dni, telefon, email, dniconsultar;
-    @FXML TextField Data_Regis, Tipus_Client, Targeta, Lloc_Feina, Data_Contratacio, Salari_Brut;
+    @FXML TextField Data_Regis, Tipus_Client, Targeta, Lloc_Feina, Data_Contratacio, Salari_Brut, Estat_Laboral;
     @FXML DatePicker data_naixement_bo, Data_Regist_bo, Data_Contratacio_bo;
     @FXML Button boto_afegir_client, boto_afegir_empleat, boto_eliminar, boto_crearReserva;
 
@@ -57,10 +57,22 @@ public class PrimaryController {
                 dni.setText(persona.getDni());
                 telefon.setText(persona.getTelefon());
                 email.setText(persona.getEmail());
+                
+                if (persona instanceof Client) {
+                    Data_Regist_bo.setValue(((Client) persona).getData_registre().toLocalDate());
+                    Tipus_Client.setText(((Client) persona).getTipus_client());
+                    Targeta.setText(String.valueOf((((Client) persona).getTargeta_credit())));
+                }
+                
+                if (persona instanceof Empleat) {
+                    Lloc_Feina.setText(((Empleat) persona).getLlocFeina());
+                    Data_Contratacio_bo.setValue(((Empleat) persona).getDataContratacio().toLocalDate());
+                    Salari_Brut.setText(String.valueOf((((Empleat) persona).getSalariBrut())));
+                    Estat_Laboral.setText(((Empleat) persona).getEstatLaboral());
+                }
 
                 if (persona.getDataNaixement() != null) {
-                    data_naixement_bo.setValue(persona.getDataNaixement().toInstant()
-                            .atZone(java.time.ZoneId.systemDefault()).toLocalDate());
+                    data_naixement_bo.setValue(persona.getDataNaixement().toLocalDate());
                 } else {
                     data_naixement_bo.setValue(null);
                 }
@@ -130,7 +142,7 @@ public class PrimaryController {
 
                 // Paso 4: Llamar al modelo para agregar el empleado
                 boolean success = model.afegirEmpleat(persona, Lloc_Feina.getText(), dataContractacio.toString(), 
-                        Double.parseDouble(Salari_Brut.getText())); // Salario bruto
+                Double.parseDouble(Salari_Brut.getText()), Estat_Laboral.getText()); // Salario bruto
 
                 // Paso 5: Comprobar si fue exitoso (si no, se puede manejar de alguna manera)
                 if (!success) {
@@ -207,12 +219,15 @@ public class PrimaryController {
         telefon.clear();
         email.clear();
         dniconsultar.clear();
-        Data_Regis.clear();
         Tipus_Client.clear();
         Targeta.clear();
         Lloc_Feina.clear();
-        Data_Contratacio.clear();
+        data_naixement_bo.setValue(null);
+        Data_Contratacio_bo.setValue(null);
+        Data_Regist_bo.setValue(null);
         Salari_Brut.clear();
+        Estat_Laboral.clear();
+        
 
     }
 }

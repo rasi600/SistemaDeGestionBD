@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1056.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.sistemadegestiohotelraul.SecondaryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1056.0" stylesheets="@css/css.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.sistemadegestiohotelraul.SecondaryController">
    <children>
       <Text layoutX="495.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistema">
          <font>
@@ -26,17 +26,17 @@
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <Text layoutX="85.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data_Reserva">
+      <Text layoutX="85.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data_Reserva">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <Text layoutX="85.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data_Inici">
+      <Text layoutX="85.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data_Inici">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <Text layoutX="85.0" layoutY="423.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data_Fi">
+      <Text layoutX="85.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data_Fi">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
@@ -48,66 +48,65 @@
          </font>
       </Text>
       <TextField fx:id="id_persona" layoutX="543.0" layoutY="128.0" prefHeight="24.0" prefWidth="273.0" promptText="1, 2, 3, 14..." />
-      <Text layoutX="84.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipus_Reserva">
+      <Text layoutX="84.0" layoutY="533.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipus_Reserva">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <Text layoutX="84.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipus_IVA">
+      <Text layoutX="84.0" layoutY="581.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipus_IVA">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <Text layoutX="85.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preu_total">
+      <Text layoutX="85.0" layoutY="629.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preu_total">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <TextField fx:id="preu_total" layoutX="282.0" layoutY="545.0" prefHeight="24.0" prefWidth="220.0" promptText="55" />
-      <DatePicker fx:id="data_inici" layoutX="281.0" layoutY="354.0" prefHeight="24.0" prefWidth="220.0" promptText="20/10/2025" />
-      <DatePicker fx:id="data_reserva" layoutX="281.0" layoutY="306.0" prefHeight="24.0" prefWidth="220.0" promptText="19/10/2025" />
-      <DatePicker fx:id="data_fi" layoutX="281.0" layoutY="403.0" prefHeight="24.0" prefWidth="220.0" promptText="21/10/2025" />
-      <ComboBox fx:id="tipus_reserva" layoutX="282.0" layoutY="451.0" prefHeight="24.0" prefWidth="220.0" />
-      <ComboBox fx:id="tipus_iva" layoutX="282.0" layoutY="497.0" prefHeight="24.0" prefWidth="220.0" />
+      <TextField fx:id="preu_total" layoutX="282.0" layoutY="609.0" prefHeight="24.0" prefWidth="220.0" promptText="55" />
+      <DatePicker fx:id="data_inici" layoutX="281.0" layoutY="400.0" prefHeight="24.0" prefWidth="220.0" promptText="20/10/2025" />
+      <DatePicker fx:id="data_reserva" layoutX="281.0" layoutY="348.0" prefHeight="24.0" prefWidth="220.0" promptText="19/10/2025" />
+      <DatePicker fx:id="data_fi" layoutX="281.0" layoutY="454.0" prefHeight="24.0" prefWidth="220.0" promptText="21/10/2025" />
+      <ComboBox fx:id="tipus_reserva" layoutX="282.0" layoutY="508.0" prefHeight="24.0" prefWidth="220.0" styleClass="combo-box" />
+      <ComboBox fx:id="tipus_iva" layoutX="282.0" layoutY="561.0" prefHeight="24.0" prefWidth="220.0" styleClass="combo-box" />
       <Line endX="273.5" layoutX="346.0" layoutY="246.0" startX="-265.0" />
-      <Button layoutX="455.0" layoutY="645.0" mnemonicParsing="false" onAction="#CrearReservaYFactura" text="Crear Reserva + Factura" />
-      <Button layoutX="474.0" layoutY="684.0" mnemonicParsing="false" onAction="#VentanaPrimary" text="Annrere - Afegir" textFill="#ff3434">
+      <Button layoutX="467.0" layoutY="691.0" mnemonicParsing="false" onAction="#VentanaPrimary" styleClass="atras" text="Annrere - Afegir" textFill="#ff3434">
          <font>
             <Font name="System Bold Italic" size="13.0" />
          </font>
       </Button>
       <Line endX="278.0" endY="-10.5" layoutX="266.0" layoutY="256.0" startX="278.0" startY="340.0" />
       <Line endX="513.0" endY="1.5" layoutX="459.0" layoutY="244.0" startX="161.0" startY="1.5" />
-      <Text layoutX="590.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data_Emissio">
+      <Text layoutX="590.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data_Emissio">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <Text layoutX="590.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Metode_pagament">
+      <Text layoutX="590.0" layoutY="474.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Metode_pagament">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <ComboBox fx:id="metode_pagament" layoutX="838.0" layoutY="354.0" prefHeight="24.0" prefWidth="127.0" />
-      <Text layoutX="590.0" layoutY="423.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Base_imposable">
+      <ComboBox fx:id="metode_pagament" layoutX="840.0" layoutY="450.0" prefHeight="24.0" prefWidth="127.0" styleClass="combo-box" />
+      <Text layoutX="590.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Base_imposable">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <TextField fx:id="base_imposable" layoutX="811.0" layoutY="403.0" prefHeight="24.0" prefWidth="154.0" />
-      <DatePicker fx:id="data_emissio" layoutX="775.0" layoutY="306.0" prefHeight="24.0" prefWidth="190.0" promptText="19/10/2025" />
-      <Text layoutX="588.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iva">
+      <TextField fx:id="base_imposable" layoutX="811.0" layoutY="503.0" prefHeight="24.0" prefWidth="154.0" />
+      <DatePicker fx:id="data_emissio" layoutX="781.0" layoutY="394.0" prefHeight="24.0" prefWidth="190.0" promptText="19/10/2025" />
+      <Text layoutX="588.0" layoutY="571.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iva">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <TextField fx:id="iva" layoutX="690.0" layoutY="451.0" prefHeight="24.0" prefWidth="273.0" promptText="24" />
-      <Text layoutX="588.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total">
+      <TextField fx:id="iva" layoutX="690.0" layoutY="551.0" prefHeight="24.0" prefWidth="273.0" promptText="24" />
+      <Text layoutX="588.0" layoutY="617.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <TextField fx:id="total" layoutX="690.0" layoutY="497.0" prefHeight="24.0" prefWidth="273.0" promptText="220" />
+      <TextField fx:id="total" layoutX="690.0" layoutY="597.0" prefHeight="24.0" prefWidth="273.0" promptText="220" />
       <Text fill="#0376ff" layoutX="254.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RESERVA">
          <font>
             <Font name="System Bold Italic" size="22.0" />
@@ -118,10 +117,38 @@
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <Button layoutX="864.0" layoutY="657.0" mnemonicParsing="false" onAction="#VentanaTasca" text="TASCAS" textFill="#4b09da">
+      <Button layoutX="647.0" layoutY="691.0" mnemonicParsing="false" onAction="#VentanaTasca" styleClass="tareas" text="TASCAS" textFill="#4b09da">
          <font>
             <Font name="System Bold Italic" size="13.0" />
          </font>
       </Button>
+      <Text layoutX="588.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID_Reserva">
+         <font>
+            <Font name="System Bold Italic" size="22.0" />
+         </font>
+      </Text>
+      <TextField fx:id="id_reservaF" layoutX="742.0" layoutY="352.0" prefHeight="32.0" prefWidth="229.0" promptText="24" />
+      <Button layoutX="72.0" layoutY="656.0" mnemonicParsing="false" onAction="#CrearReserva" styleClass="tareas" text="CREAR RESERVA" textFill="#4b09da">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="820.0" layoutY="647.0" mnemonicParsing="false" onAction="#CrearFactura" styleClass="tareas" text="CREAR FACTURA" textFill="#4b09da">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Button>
+      <Text layoutX="84.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID_Reserva">
+         <font>
+            <Font name="System Bold Italic" size="22.0" />
+         </font>
+      </Text>
+      <TextField fx:id="id_reserva" layoutX="238.0" layoutY="303.0" prefHeight="32.0" prefWidth="263.0" promptText="24" />
+      <Text layoutX="590.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID_Factura">
+         <font>
+            <Font name="System Bold Italic" size="22.0" />
+         </font>
+      </Text>
+      <TextField fx:id="id_factura" layoutX="744.0" layoutY="303.0" prefHeight="32.0" prefWidth="229.0" promptText="24" />
    </children>
 </AnchorPane>

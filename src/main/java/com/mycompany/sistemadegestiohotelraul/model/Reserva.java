@@ -12,6 +12,8 @@ import java.util.Date;
  */
 public class Reserva {
     private int id_reserva;
+    private int id_persona;
+    private int id_habitacio;
     private Date data_reserva;
     private Date data_inici;
     private Date data_fi;
@@ -19,8 +21,10 @@ public class Reserva {
     private double tipus_IVA;
     private double preu_total_reserva;
 
-    // Constructor SIN id_reserva (se genera automáticamente)
-    public Reserva(Date data_reserva, Date data_inici, Date data_fi, String tipus_reserva, double tipus_IVA, double preu_total_reserva) {
+    public Reserva(int id_reserva, int id_persona, int id_habitacio, Date data_reserva, Date data_inici, Date data_fi, String tipus_reserva, double tipus_IVA, double preu_total_reserva) {
+        this.id_reserva = id_reserva;
+        this.id_persona = id_persona;
+        this.id_habitacio = id_habitacio;
         this.data_reserva = data_reserva;
         this.data_inici = data_inici;
         this.data_fi = data_fi;
@@ -35,6 +39,22 @@ public class Reserva {
 
     public void setId_reserva(int id_reserva) {
         this.id_reserva = id_reserva;
+    }
+
+    public int getId_persona() {
+        return id_persona;
+    }
+
+    public void setId_persona(int id_persona) {
+        this.id_persona = id_persona;
+    }
+
+    public int getId_habitacio() {
+        return id_habitacio;
+    }
+
+    public void setId_habitacio(int id_habitacio) {
+        this.id_habitacio = id_habitacio;
     }
 
     public Date getData_reserva() {
@@ -84,6 +104,8 @@ public class Reserva {
     public void setPreu_total_reserva(double preu_total_reserva) {
         this.preu_total_reserva = preu_total_reserva;
     }
+
+    
 
     
 }

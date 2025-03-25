@@ -61,9 +61,9 @@ public class Model {
     }
 
     // Método para agregar un empleado
-    public boolean afegirEmpleat(Persona persona, String llocFeina, String dataContratacio, double salariBrut) {
+    public boolean afegirEmpleat(Persona persona, String llocFeina, String dataContratacio, double salariBrut, String estatLaboral) {
         String sqlPersona = "INSERT INTO Persona (id_persona, nom, cognoms, adreça, dni, data_naixement, telefon, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        String sqlEmpleat = "INSERT INTO Empleat (id_persona, lloc_feina, data_contratacio, salari_brut) VALUES (?, ?, ?, ?)";
+        String sqlEmpleat = "INSERT INTO Empleat (id_persona, lloc_feina, data_contratacio, salari_brut, estat_laboral) VALUES (?, ?, ?, ?, )";
 
         try (Connection conn = Connexio.connectar();
              PreparedStatement stmtPersona = conn.prepareStatement(sqlPersona);
@@ -82,6 +82,7 @@ public class Model {
             stmtEmpleat.setString(2, llocFeina);
             stmtEmpleat.setString(3, dataContratacio);
             stmtEmpleat.setDouble(4, salariBrut);
+            stmtEmpleat.setString(5, estatLaboral);
 
             int filasPersona = stmtPersona.executeUpdate();
             int filasEmpleat = stmtEmpleat.executeUpdate();
@@ -115,60 +116,74 @@ public class Model {
         }
     }
 
-    
-         // Método para agregar una reserva
-    public boolean crearReservaYFactura(Reserva reserva, Persona persona, Habitacio habitacion, Factura factura) throws SQLException {
-        String sqlReserva = "INSERT INTO Reserva (data_reserva, data_inici, data_fi, tipus_reserva, tipus_IVA, preu_total_reserva, id_client, id_habitacio) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        String sqlFactura = "INSERT INTO Factura (data_emissio, metode_pagament, base_imposable, iva, total, id_reserva) VALUES (?, ?, ?, ?, ?, ?)";
-        String sqlCliente = "SELECT id_client FROM Client WHERE id_persona = ?";
 
-        try (Connection conn = Connexio.connectar();
-             PreparedStatement stmtCliente = conn.prepareStatement(sqlCliente);
-             PreparedStatement stmtReserva = conn.prepareStatement(sqlReserva, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement stmtFactura = conn.prepareStatement(sqlFactura)) {
+    // Método para crear una reserva, ahora con id_reserva proporcionada manualmente
+    public boolean crearReserva(Reserva reserva, int id_persona, int id_habitacio, int id_reserva) {
+        boolean resultado = false;
+        String sql = "INSERT INTO reserva (id_reserva, id_persona, id_habitacio, data_reserva, data_inici, data_fi, tipus_reserva, tipus_iva, preu_total) "
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            conn.setAutoCommit(false);
+        try (Connection conn = Connexio.connectar();  // Usamos la clase Database para obtener la conexión
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            // Obtener id_client desde id_persona
-            stmtCliente.setInt(1, persona.getId());
-            ResultSet rs = stmtCliente.executeQuery();
-            if (!rs.next()) throw new SQLException("Persona no encontrada en Client");
-            int idClient = rs.getInt(1);
+            // Establecemos los valores de la reserva
+            ps.setInt(1, id_reserva);  // Asignamos el id_reserva que se pasa como parámetro
+            ps.setInt(2, id_persona);  // Asignamos el id_persona
+            ps.setInt(3, id_habitacio);  // Asignamos el id_habitacio
 
-            // Insertar reserva
-            stmtReserva.setDate(1, new java.sql.Date(reserva.getData_reserva().getTime()));
-            stmtReserva.setDate(2, new java.sql.Date(reserva.getData_inici().getTime()));
-            stmtReserva.setDate(3, new java.sql.Date(reserva.getData_fi().getTime()));
-            stmtReserva.setString(4, reserva.getTipus_reserva());
-            stmtReserva.setDouble(5, reserva.getTipus_IVA());
-            stmtReserva.setDouble(6, reserva.getPreu_total_reserva());
-            stmtReserva.setInt(7, idClient);
-            stmtReserva.setInt(8, habitacion.getId_habitacio());
+            // Rellenamos el resto de los campos de la reserva
+            ps.setDate(4, new java.sql.Date(reserva.getData_reserva().getTime()));  // Convertimos LocalDate a SQL Date
+            ps.setDate(5, new java.sql.Date(reserva.getData_inici().getTime()));    // Convertimos LocalDate a SQL Date
+            ps.setDate(6, new java.sql.Date(reserva.getData_fi().getTime()));       // Convertimos LocalDate a SQL Date
+            ps.setString(7, reserva.getTipus_reserva());
+            ps.setDouble(8, reserva.getTipus_IVA());
+            ps.setDouble(9, reserva.getPreu_total_reserva());
 
-            if (stmtReserva.executeUpdate() == 0) throw new SQLException("Error al insertar la reserva");
+            // Ejecutamos la inserción
+            int filasAfectadas = ps.executeUpdate();  // Ejecutamos la inserción
 
-            // Obtener id_reserva generado
-            ResultSet keys = stmtReserva.getGeneratedKeys();
-            if (!keys.next()) throw new SQLException("No se generó un ID de reserva");
-            int idReserva = keys.getInt(1);
-
-            // Insertar factura
-            stmtFactura.setDate(1, new java.sql.Date(factura.getData_emissio().getTime()));
-            stmtFactura.setString(2, factura.getMetode_pagament());
-            stmtFactura.setDouble(3, factura.getBase_imposable());
-            stmtFactura.setDouble(4, factura.getIva());
-            stmtFactura.setDouble(5, factura.getTotal());
-            stmtFactura.setInt(6, idReserva);
-
-            if (stmtFactura.executeUpdate() == 0) throw new SQLException("Error al insertar la factura");
-
-            conn.commit();
-            return true;
+            if (filasAfectadas > 0) {
+                resultado = true;  // Si la inserción fue exitosa, cambiamos resultado a true
+            }
 
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
-            throw e;
+            e.printStackTrace();
         }
+
+        return resultado;  // Retornamos si la inserción fue exitosa
+    }
+    
+     public boolean crearFactura(Factura factura, int id_reserva, int id_factura) {
+        boolean resultado = false;
+        String sql = "INSERT INTO factura (id_factura, id_reserva, data_emissio, metode_pagament, base_imposable, iva, total) "
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = Connexio.connectar();  // Usamos la clase Database para obtener la conexión
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            // Asignamos los valores de la factura
+            ps.setInt(1, id_factura);  // Asignamos el id_factura que se pasa como parámetro
+            ps.setInt(2, id_reserva);  // Asignamos el id_reserva (clave foránea de la reserva)
+
+            // Rellenamos el resto de los campos de la factura
+            ps.setDate(3, java.sql.Date.valueOf(factura.getData_emissio()));  // Convertimos LocalDate a SQL Date
+            ps.setString(4, factura.getMetode_pagament());
+            ps.setDouble(5, factura.getBase_imposable());
+            ps.setDouble(6, factura.getIva());
+            ps.setDouble(7, factura.getTotal());
+
+            // Ejecutamos la inserción
+            int filasAfectadas = ps.executeUpdate();  // Ejecutamos la inserción
+
+            if (filasAfectadas > 0) {
+                resultado = true;  // Si la inserción fue exitosa, cambiamos resultado a true
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultado;  // Retornamos si la inserción fue exitosa
     }
 
     //===============================================OBTENER===============================================
@@ -307,7 +322,7 @@ public class Model {
                             id, nom, cognoms, adreça, dni, dataNaixementSQL, telefon, email, 
                             rsCliente.getDate("data_registre"),  // Obtener fecha de registro
                             rsCliente.getString("tipus_client"),
-                            rsCliente.getInt("targeta_credit")
+                            rsCliente.getString("targeta")
                         );
                     }
                 }

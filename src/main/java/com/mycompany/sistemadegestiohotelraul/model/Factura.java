@@ -1,25 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.sistemadegestiohotelraul.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-/**
- *
- * @author alumne
- */
 public class Factura {
-    private int id_factura;
-    private Date data_emissio;
+    private int id_factura; 
+    private int id_reserva;
+    private LocalDate data_emissio;
     private String metode_pagament;
-    private Double base_imposable;
-    private Double iva;
-    private Double total;
+    private double base_imposable;
+    private double iva;
+    private double total;
 
-    public Factura(int id_factura, Date data_emissio, String metode_pagament, Double base_imposable, Double iva, Double total) {
-        this.id_factura = id_factura;
+    // Constructor
+    public Factura(int id_reserva, LocalDate data_emissio, String metode_pagament, double base_imposable, double iva, double total) {
+        this.id_reserva = id_reserva;
         this.data_emissio = data_emissio;
         this.metode_pagament = metode_pagament;
         this.base_imposable = base_imposable;
@@ -27,6 +21,7 @@ public class Factura {
         this.total = total;
     }
 
+    // Getters y setters
     public int getId_factura() {
         return id_factura;
     }
@@ -35,11 +30,19 @@ public class Factura {
         this.id_factura = id_factura;
     }
 
-    public Date getData_emissio() {
+    public int getId_reserva() {
+        return id_reserva;
+    }
+
+    public void setId_reserva(int id_reserva) {
+        this.id_reserva = id_reserva;
+    }
+
+    public LocalDate getData_emissio() {
         return data_emissio;
     }
 
-    public void setData_emissio(Date data_emissio) {
+    public void setData_emissio(LocalDate data_emissio) {
         this.data_emissio = data_emissio;
     }
 
@@ -51,36 +54,40 @@ public class Factura {
         this.metode_pagament = metode_pagament;
     }
 
-    public Double getBase_imposable() {
+    public double getBase_imposable() {
         return base_imposable;
     }
 
-    public void setBase_imposable(Double base_imposable) {
+    public void setBase_imposable(double base_imposable) {
         this.base_imposable = base_imposable;
     }
 
-    public Double getIva() {
+    public double getIva() {
         return iva;
     }
 
-    public void setIva(Double iva) {
+    public void setIva(double iva) {
         this.iva = iva;
     }
 
-    public Double getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(Double total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 
     @Override
     public String toString() {
-        return "Factura{" + "id_factura=" + id_factura + ", data_emissio=" + data_emissio + ", metode_pagament=" + metode_pagament + ", base_imposable=" + base_imposable + ", iva=" + iva + ", total=" + total + '}';
+        return "Factura{" +
+                "id_factura=" + id_factura +
+                ", id_reserva=" + id_reserva +
+                ", data_emissio=" + data_emissio +
+                ", metode_pagament='" + metode_pagament + '\'' +
+                ", base_imposable=" + base_imposable +
+                ", iva=" + iva +
+                ", total=" + total +
+                '}';
     }
-
-    
-    
-    
 }

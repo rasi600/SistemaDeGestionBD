@@ -1,0 +1,149 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 21 de març 2025, 12:05:28
+    Author     : alumne
+*/
+
+/* Estilo general de la ventana */
+.root {
+    -fx-background-color: #e8ecef;
+    -fx-font-family: 'Segoe UI', sans-serif;
+}
+
+/* Estilos para los títulos principales */
+.label {
+    -fx-font-size: 18px;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+    -fx-padding: 6px 0;
+}
+
+/* Estilos para los textfields */
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a0a4a8;
+    -fx-border-radius: 6px;
+    -fx-padding: 6px;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 4, 0, 0, 2);
+    -fx-transition: all 0.3s ease-in-out;
+}
+.text-field:focused {
+    -fx-border-color: #2471a3;
+    -fx-border-width: 1.5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(36,113,163,0.3), 5, 0, 0, 2);
+}
+
+/* Estilos para los DatePicker */
+.date-picker {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a0a4a8;
+    -fx-border-radius: 6px;
+    -fx-padding: 6px;
+    -fx-font-size: 14px;
+}
+.date-picker:focused {
+    -fx-border-color: #2471a3;
+}
+
+/* Estilos para los ComboBox */
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a0a4a8;
+    -fx-border-radius: 6px;
+    -fx-padding: 6px;
+    -fx-font-size: 14px;
+}
+.combo-box:focused {
+    -fx-border-color: #2471a3;
+}
+
+/* Botones generales */
+.button {
+    -fx-background-color: #2471a3;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 6px;
+    -fx-padding: 8px 12px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 8, 0, 0, 4);
+    -fx-transition: all 0.3s ease-in-out;
+}
+.button:hover {
+    -fx-background-color: #1b5a87;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,90,135,0.5), 9, 0, 0, 4);
+}
+
+/* Botón de eliminar en rojo */
+.button.eliminar {
+    -fx-background-color: #c0392b;
+}
+.button.eliminar:hover {
+    -fx-background-color: #922b21;
+}
+
+/* Botones específicos */
+.button.consultar {
+    -fx-background-color: #16a085;
+}
+.button.consultar:hover {
+    -fx-background-color: #12876f;
+}
+
+.button.limpiar {
+    -fx-background-color: #f39c12;
+}
+.button.limpiar:hover {
+    -fx-background-color: #c87f0a;
+}
+
+.button.crear-reserva {
+    -fx-background-color: #2980b9;
+}
+.button.crear-reserva:hover {
+    -fx-background-color: #1f6690;
+}
+
+.button.atras {
+    -fx-background-color: #7f8c8d;
+}
+.button.atras:hover {
+    -fx-background-color: #626c6d;
+}
+
+.button.tareas {
+    -fx-background-color: #8e44ad;
+}
+.button.tareas:hover {
+    -fx-background-color: #732d91;
+}
+
+/* Sección de búsqueda con borde sutil */
+#buscarPorID {
+    -fx-border-color: #2471a3;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 6px;
+    -fx-padding: 10px;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 3, 0, 0, 2);
+}
+
+/* Estilos para los títulos de secciones */
+.titulo-seccion {
+    -fx-font-size: 20px;
+    -fx-text-fill: #2471a3;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 0;
+    -fx-border-width: 0 0 1.5px 0;
+    -fx-border-color: #a0a4a8;
+}
+
+/* Línea divisoria sutil */
+.separator {
+    -fx-background-color: #a0a4a8;
+    -fx-padding: 2px;
+}

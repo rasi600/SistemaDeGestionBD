@@ -3,7 +3,7 @@ package com.mycompany.sistemadegestiohotelraul.model;
 import java.time.LocalDate;
 
 public class Factura {
-    private int id_factura; 
+    private int id_factura;
     private int id_reserva;
     private LocalDate data_emissio;
     private String metode_pagament;
@@ -12,7 +12,9 @@ public class Factura {
     private double total;
 
     // Constructor
-    public Factura(int id_reserva, LocalDate data_emissio, String metode_pagament, double base_imposable, double iva, double total) {
+    public Factura(int id_factura, int id_reserva, LocalDate data_emissio, String metode_pagament,
+                   double base_imposable, double iva, double total) {
+        this.id_factura = id_factura;
         this.id_reserva = id_reserva;
         this.data_emissio = data_emissio;
         this.metode_pagament = metode_pagament;
@@ -21,7 +23,6 @@ public class Factura {
         this.total = total;
     }
 
-    // Getters y setters
     public int getId_factura() {
         return id_factura;
     }
@@ -38,8 +39,8 @@ public class Factura {
         this.id_reserva = id_reserva;
     }
 
-    public LocalDate getData_emissio() {
-        return data_emissio;
+    public LocalDate getData_emissioAsLocalDate() {
+        return data_emissio;  // Ya es LocalDate, así que solo lo devolvemos
     }
 
     public void setData_emissio(LocalDate data_emissio) {
@@ -78,16 +79,5 @@ public class Factura {
         this.total = total;
     }
 
-    @Override
-    public String toString() {
-        return "Factura{" +
-                "id_factura=" + id_factura +
-                ", id_reserva=" + id_reserva +
-                ", data_emissio=" + data_emissio +
-                ", metode_pagament='" + metode_pagament + '\'' +
-                ", base_imposable=" + base_imposable +
-                ", iva=" + iva +
-                ", total=" + total +
-                '}';
-    }
+    
 }

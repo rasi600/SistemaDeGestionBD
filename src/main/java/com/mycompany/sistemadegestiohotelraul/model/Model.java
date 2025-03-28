@@ -63,7 +63,7 @@ public class Model {
     // Método para agregar un empleado
     public boolean afegirEmpleat(Persona persona, String llocFeina, String dataContratacio, double salariBrut, String estatLaboral) {
         String sqlPersona = "INSERT INTO Persona (id_persona, nom, cognoms, adreça, dni, data_naixement, telefon, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        String sqlEmpleat = "INSERT INTO Empleat (id_persona, lloc_feina, data_contratacio, salari_brut, estat_laboral) VALUES (?, ?, ?, ?, )";
+        String sqlEmpleat = "INSERT INTO Empleat (id_persona, lloc_feina, data_contratacio, salari_brut, estat_laboral) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = Connexio.connectar();
              PreparedStatement stmtPersona = conn.prepareStatement(sqlPersona);
@@ -95,64 +95,88 @@ public class Model {
     }
     
     // Método para agregar una tarea
-    public boolean afegirTasca(Tasca tasca) throws SQLException {
-        // 1. SQL para insertar en Tasca
-        String sql = "INSERT INTO Tasca (descripcio, data_creacio, data_execucio, estat) VALUES (?, ?, ?, ?)";
+    public void afegirTasca(Tasca tasca) throws SQLException {
+        String query = "INSERT INTO Tasca (descripcio, data_creacio, data_execucio, estat) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = Connexio.connectar();  // 2. Conectar a la base de datos
-             PreparedStatement stmt = conn.prepareStatement(sql)) {  // 3. Preparar sentencia
+        try (Connection conn = Connexio.connectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            // 4. Establecer parámetros para la tarea
-            stmt.setString(1, tasca.getDescripcio());  
-            stmt.setDate(2, tasca.getData_creacio());  // Fecha de creación
-            stmt.setDate(3, tasca.getData_execucio()); // Fecha de ejecución
-            stmt.setString(4, tasca.getEstat());      // Estado de la tarea
+            stmt.setString(1, tasca.getDescripcio());
+            stmt.setDate(2, tasca.getData_creacio());
+            stmt.setDate(3, tasca.getData_execucio());
+            stmt.setString(4, tasca.getEstat());
 
-            // 5. Ejecutar la inserción
-            int filasAfectadas = stmt.executeUpdate();  
-
-            // 6. Si se afectó al menos una fila, return true
-            return filasAfectadas > 0;  
+            stmt.executeUpdate();
         }
     }
 
 
-    // Método para crear una reserva, ahora con id_reserva proporcionada manualmente
-    public boolean crearReserva(Reserva reserva, int id_persona, int id_habitacio, int id_reserva) {
-        boolean resultado = false;
-        String sql = "INSERT INTO reserva (id_reserva, id_persona, id_habitacio, data_reserva, data_inici, data_fi, tipus_reserva, tipus_iva, preu_total) "
-                   + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection conn = Connexio.connectar();  // Usamos la clase Database para obtener la conexión
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            // Establecemos los valores de la reserva
-            ps.setInt(1, id_reserva);  // Asignamos el id_reserva que se pasa como parámetro
-            ps.setInt(2, id_persona);  // Asignamos el id_persona
-            ps.setInt(3, id_habitacio);  // Asignamos el id_habitacio
-
-            // Rellenamos el resto de los campos de la reserva
-            ps.setDate(4, new java.sql.Date(reserva.getData_reserva().getTime()));  // Convertimos LocalDate a SQL Date
-            ps.setDate(5, new java.sql.Date(reserva.getData_inici().getTime()));    // Convertimos LocalDate a SQL Date
-            ps.setDate(6, new java.sql.Date(reserva.getData_fi().getTime()));       // Convertimos LocalDate a SQL Date
-            ps.setString(7, reserva.getTipus_reserva());
-            ps.setDouble(8, reserva.getTipus_IVA());
-            ps.setDouble(9, reserva.getPreu_total_reserva());
-
-            // Ejecutamos la inserción
-            int filasAfectadas = ps.executeUpdate();  // Ejecutamos la inserción
-
-            if (filasAfectadas > 0) {
-                resultado = true;  // Si la inserción fue exitosa, cambiamos resultado a true
+    public boolean crearReserva(Reserva reserva) {
+        String sql = "INSERT INTO reserva (id_reserva, id_client, id_habitacio, data_reserva, data_inici, data_fi, tipus_reserva, tipus_IVA, preu_total_reserva) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        try (Connection con = Connexio.connectar();
+            PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, reserva.getId_reserva());
+            stmt.setInt(2, reserva.getId_client());
+            stmt.setInt(3, reserva.getId_habitacio());
+            stmt.setDate(4, java.sql.Date.valueOf(reserva.getData_reserva())); 
+            stmt.setDate(5, java.sql.Date.valueOf(reserva.getData_inici()));  
+            stmt.setDate(6, java.sql.Date.valueOf(reserva.getData_fi()));     
+            stmt.setString(7, reserva.getTipus_reserva());
+            stmt.setDouble(8, reserva.getTipus_IVA());
+            stmt.setDouble(9, reserva.getPreu_total_reserva());
+            
+            int filasInsertadas = stmt.executeUpdate();
+            return filasInsertadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public List<String> obtenerClientes() {
+        List<String> clientes = new ArrayList<>();
+        String sql = "SELECT Client.id_client, Persona.nom FROM Client JOIN Persona ON Client.id_persona = Persona.id_persona";
+        
+        try (Connection con = Connexio.connectar();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                int idClient = rs.getInt("id_client");
+                String nombre = rs.getString("nom");
+                clientes.add(idClient + " - " + nombre);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return resultado;  // Retornamos si la inserción fue exitosa
+        
+        return clientes;
     }
-    
+
+    public List<String> obtenerNombresEmpleados() throws SQLException {
+        List<String> nombres = new ArrayList<>();
+        String query = "SELECT nom FROM Persona p " +
+                       "INNER JOIN Empleat e ON p.id_persona = e.id_persona";
+
+        try (Connection con = Connexio.connectar();
+             PreparedStatement stmt = con.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                nombres.add(rs.getString("nom")); // Solo obtiene el nombre
+            }
+        }
+
+        if (nombres.isEmpty()) {
+            System.out.println("No hay empleados en la BD.");
+        }
+
+        return nombres;
+    }
+
+
+
      public boolean crearFactura(Factura factura, int id_reserva, int id_factura) {
         boolean resultado = false;
         String sql = "INSERT INTO factura (id_factura, id_reserva, data_emissio, metode_pagament, base_imposable, iva, total) "
@@ -166,7 +190,7 @@ public class Model {
             ps.setInt(2, id_reserva);  // Asignamos el id_reserva (clave foránea de la reserva)
 
             // Rellenamos el resto de los campos de la factura
-            ps.setDate(3, java.sql.Date.valueOf(factura.getData_emissio()));  // Convertimos LocalDate a SQL Date
+            ps.setDate(3, java.sql.Date.valueOf(factura.getData_emissioAsLocalDate()));  // Convertimos LocalDate a SQL Date
             ps.setString(4, factura.getMetode_pagament());
             ps.setDouble(5, factura.getBase_imposable());
             ps.setDouble(6, factura.getIva());
@@ -188,6 +212,22 @@ public class Model {
 
     //===============================================OBTENER===============================================
     
+    public int obtenerIdEmpleadoPorNombre(String nombre) throws SQLException {
+        String query = "SELECT id_persona FROM Persona WHERE nom = ?";
+        try (Connection conn = Connexio.connectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, nombre);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id_persona");
+            }
+        }
+        return -1; // Si no se encuentra, retorna -1
+    }
+
+
+     
     // Método para obtener una persona por su ID
     public Persona obtenerPersona(int id) throws SQLException {
         // 1. Definir la consulta SQL
@@ -351,6 +391,117 @@ public class Model {
         }
         return null;  // 9. Si no se encuentra la persona, devolver null
     }
+    
+    // Método para obtener todas las reservas
+public List<String> obtenerReservas() {
+    List<String> reservas = new ArrayList<>();
+    String sql = "SELECT id_reserva, id_client FROM Reserva";  // Modificar según la estructura de la tabla de reservas
+
+    try (Connection con = Connexio.connectar();
+         Statement stmt = con.createStatement();
+         ResultSet rs = stmt.executeQuery(sql)) {
+
+        // Iterar sobre el conjunto de resultados y agregar las reservas a la lista
+        while (rs.next()) {
+            int idReserva = rs.getInt("id_reserva");
+            int idClient = rs.getInt("id_client");
+            reservas.add(idReserva + " - Cliente ID: " + idClient);  // Formato de salida "id_reserva - Cliente ID"
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return reservas;
+}
+
+// Método para obtener todas las facturas
+public List<String> obtenerFacturas() {
+    List<String> facturas = new ArrayList<>();
+    String sql = "SELECT id_factura, id_reserva FROM Factura";  // Modificar según la estructura de la tabla de facturas
+
+    try (Connection con = Connexio.connectar();
+         Statement stmt = con.createStatement();
+         ResultSet rs = stmt.executeQuery(sql)) {
+
+        // Iterar sobre el conjunto de resultados y agregar las facturas a la lista
+        while (rs.next()) {
+            int idFactura = rs.getInt("id_factura");
+            int idReserva = rs.getInt("id_reserva");
+            facturas.add(idFactura + " - Reserva ID: " + idReserva);  // Formato de salida "id_factura - Reserva ID"
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return facturas;
+}
+
+public Reserva obtenerReservaPorId(int idReserva) {
+    String sql = "SELECT * FROM Reserva WHERE id_reserva = ?";
+    try (Connection con = Connexio.connectar();
+         PreparedStatement stmt = con.prepareStatement(sql)) {
+
+        stmt.setInt(1, idReserva);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+        return new Reserva(
+            rs.getInt("id_reserva"),
+            rs.getInt("id_client"),
+            rs.getInt("id_habitacio"),
+            // Si la columna data_reserva es un Date, primero obtenemos el java.sql.Date
+            // Luego lo convertimos a LocalDate usando toLocalDate()
+            rs.getDate("data_reserva") != null ? rs.getDate("data_reserva").toLocalDate() : null, 
+
+            // Repetir para las demás fechas
+            rs.getDate("data_inici") != null ? rs.getDate("data_inici").toLocalDate() : null,
+            rs.getDate("data_fi") != null ? rs.getDate("data_fi").toLocalDate() : null,
+
+            rs.getString("tipus_reserva"),
+            rs.getDouble("tipus_IVA"),
+            rs.getDouble("preu_total_reserva")
+        );
+
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
+    public Factura obtenerFacturaPorId(int idFactura) {
+        Factura factura = null;
+        String sql = "SELECT * FROM Factura WHERE id_factura = ?";
+
+        try (Connection con = Connexio.connectar();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, idFactura);  // Establecer el parámetro de la consulta
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int idReserva = rs.getInt("id_reserva");
+
+                    // Convertir java.sql.Date a LocalDate
+                    java.sql.Date sqlDate = rs.getDate("data_emissio");
+                    LocalDate dataEmissio = sqlDate.toLocalDate();  // Conversión a LocalDate
+
+                    String metodePagament = rs.getString("metode_pagament");
+                    double baseImposable = rs.getDouble("base_imposable");
+                    double iva = rs.getDouble("iva");
+                    double total = rs.getDouble("total");
+
+                    // Crear factura
+                    factura = new Factura(idFactura, idReserva, dataEmissio, metodePagament, baseImposable, iva, total);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return factura;
+    }
+    
 
     
     //===============================================ELIMINAR===============================================
@@ -401,7 +552,46 @@ public class Model {
         return false;
     }
     
-    
+    // Método para eliminar una reserva
+public boolean eliminarReserva(int idReserva) {
+    String sql = "DELETE FROM Reserva WHERE id_reserva = ?";  // Consulta DELETE para eliminar la reserva
+
+    try (Connection con = Connexio.connectar();
+         PreparedStatement stmt = con.prepareStatement(sql)) {
+
+        // Establecer el parámetro de la consulta
+        stmt.setInt(1, idReserva);
+
+        // Ejecutar la consulta
+        int filasEliminadas = stmt.executeUpdate();
+
+        return filasEliminadas > 0;  // Si se eliminó alguna fila, la reserva fue eliminada con éxito
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;  // Si ocurre un error, devolver false
+    }
+}
+
+// Método para eliminar una factura
+public boolean eliminarFactura(int idFactura) {
+    String sql = "DELETE FROM Factura WHERE id_factura = ?";  // Consulta DELETE para eliminar la factura
+
+    try (Connection con = Connexio.connectar();
+         PreparedStatement stmt = con.prepareStatement(sql)) {
+
+        // Establecer el parámetro de la consulta
+        stmt.setInt(1, idFactura);
+
+        // Ejecutar la consulta
+        int filasEliminadas = stmt.executeUpdate();
+
+        return filasEliminadas > 0;  // Si se eliminó alguna fila, la factura fue eliminada con éxito
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;  // Si ocurre un error, devolver false
+    }
+}
+
     //===============================================VERIFICAR===============================================
     
     // Método para verificar si una persona es cliente

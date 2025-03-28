@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.sistemadegestiohotelraul.TascaController">
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="830.0" stylesheets="@css/css.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.sistemadegestiohotelraul.TascaController">
    <children>
       <Text layoutX="377.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistema">
          <font>
@@ -21,37 +21,44 @@
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <Text layoutX="198.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <Text layoutX="240.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <Text layoutX="230.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripcio">
+      <Text layoutX="193.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text layoutX="235.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text layoutX="224.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripcio">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <Text layoutX="231.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data_creacio">
+      <Text layoutX="224.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data_creacio">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <Text layoutX="230.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data_execucio">
+      <Text layoutX="224.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data_execucio">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <Text layoutX="230.0" layoutY="446.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estat">
+      <Text layoutX="224.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estat">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Text>
-      <TextField fx:id="estat" layoutX="427.0" layoutY="426.0" prefHeight="24.0" prefWidth="220.0" promptText="55" />
-      <TextArea fx:id="descripcio" layoutX="427.0" layoutY="189.0" prefHeight="87.0" prefWidth="220.0" />
-      <DatePicker fx:id="data_creacio" layoutX="427.0" layoutY="330.0" prefHeight="24.0" prefWidth="220.0" />
-      <DatePicker fx:id="data_execucio" layoutX="427.0" layoutY="380.0" prefHeight="24.0" prefWidth="220.0" />
-      <Button layoutX="379.0" layoutY="526.0" mnemonicParsing="false" onAction="#CrearTasca" text="Crear Tasca" />
-      <Button layoutX="356.0" layoutY="564.0" mnemonicParsing="false" onAction="#VentanaSecondary" text="Anrere - Reserves" textFill="RED">
+      <TextField fx:id="estat" layoutX="421.0" layoutY="404.0" prefHeight="24.0" prefWidth="220.0" promptText="55" />
+      <TextArea fx:id="descripcio" layoutX="421.0" layoutY="188.0" prefHeight="87.0" prefWidth="220.0" />
+      <DatePicker fx:id="data_creacio" layoutX="420.0" layoutY="289.0" prefHeight="24.0" prefWidth="220.0" />
+      <DatePicker fx:id="data_execucio" layoutX="420.0" layoutY="346.0" prefHeight="24.0" prefWidth="220.0" />
+      <Button layoutX="366.0" layoutY="475.0" mnemonicParsing="false" onAction="#CrearTasca" styleClass="crear-reserva" text="Crear Tasca" />
+      <Button layoutX="348.0" layoutY="526.0" mnemonicParsing="false" onAction="#VentanaSecondary" styleClass="atras" text="Anrere - Reserves" textFill="RED">
          <font>
             <Font name="Chandas" size="13.0" />
          </font></Button>
-      <ComboBox fx:id="comboBoxTareas" layoutX="589.0" layoutY="526.0" onAction="#initialize" prefWidth="150.0" />
+      <ComboBox fx:id="comboBoxTareas" layoutX="607.0" layoutY="522.0" onAction="#initialize" prefWidth="150.0" />
+      <Text layoutX="224.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Asignar Empleat">
+         <font>
+            <Font name="System Bold Italic" size="22.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="comboBoxEmpleados" layoutX="420.0" layoutY="121.0" prefHeight="42.0" prefWidth="220.0" />
+      <Button layoutX="84.0" layoutY="522.0" mnemonicParsing="false" onAction="#LimpiarCampos" styleClass="limpiar" text="Limpiar Campos" />
    </children>
 </AnchorPane>

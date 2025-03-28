@@ -8,16 +8,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class PrimaryController {
 
@@ -120,37 +116,39 @@ public class PrimaryController {
     }
 
     @FXML
-    public void afegirEmpleat() {
-        // Paso 1: Obtener fechas de nacimiento y contratación
+    public void afegirEmpleat() throws SQLException, FileNotFoundException, IOException {
         LocalDate dataNaixement = data_naixement_bo.getValue();
         LocalDate dataContractacio = Data_Contratacio_bo.getValue();
 
-        // Paso 2: Si las fechas son válidas
         if (dataNaixement != null && dataContractacio != null) {
             try {
-                // Paso 3: Crear el objeto Persona con los datos del formulario
-                Persona persona = new Persona(
-                    Integer.parseInt(id_persona.getText()),
-                    nom.getText(),                          
-                    cognoms.getText(),                   
-                    adreça.getText(),                      
-                    dni.getText(),                           
-                    java.sql.Date.valueOf(dataNaixement),    
-                    telefon.getText(),                       
-                    email.getText()                          
+                boolean ok = model.afegirEmpleat(
+                    new Persona(
+                        Integer.parseInt(id_persona.getText()),
+                        nom.getText(),
+                        cognoms.getText(),
+                        adreça.getText(),
+                        dni.getText(),
+                        java.sql.Date.valueOf(dataNaixement),
+                        telefon.getText(),
+                        email.getText()
+                    ),
+                    Lloc_Feina.getText(),
+                    dataContractacio.toString(),
+                    Double.parseDouble(Salari_Brut.getText()),
+                    Estat_Laboral.getText()
                 );
 
-                // Paso 4: Llamar al modelo para agregar el empleado
-                boolean success = model.afegirEmpleat(persona, Lloc_Feina.getText(), dataContractacio.toString(), 
-                Double.parseDouble(Salari_Brut.getText()), Estat_Laboral.getText()); // Salario bruto
-
-                // Paso 5: Comprobar si fue exitoso (si no, se puede manejar de alguna manera)
-                if (!success) {
-                    // Si no se agregó, podrías manejarlo aquí (ej. log)
+                if (ok) {
+                    alerta("Empleado añadido correctamente.");
+                } else {
+                    alerta("No se pudo añadir el empleado.");
                 }
             } catch (Exception e) {
-
+                alerta("⚠️ Error al añadir el empleado: " + e.getMessage());
             }
+        } else {
+            alerta("⚠️ Las fechas son obligatorias.");
         }
     }
 

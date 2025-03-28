@@ -1,29 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.sistemadegestiohotelraul.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-/**
- *
- * @author alumne
- */
 public class Reserva {
     private int id_reserva;
-    private int id_persona;
+    private int id_client;
     private int id_habitacio;
-    private Date data_reserva;
-    private Date data_inici;
-    private Date data_fi;
+    private LocalDate data_reserva;  // Cambiar Date por LocalDate
+    private LocalDate data_inici;   // Cambiar Date por LocalDate
+    private LocalDate data_fi;      // Cambiar Date por LocalDate
     private String tipus_reserva;
     private double tipus_IVA;
     private double preu_total_reserva;
 
-    public Reserva(int id_reserva, int id_persona, int id_habitacio, Date data_reserva, Date data_inici, Date data_fi, String tipus_reserva, double tipus_IVA, double preu_total_reserva) {
+    // Constructor actualizado para usar LocalDate
+    public Reserva(int id_reserva, int id_client, int id_habitacio, LocalDate data_reserva, LocalDate data_inici, LocalDate data_fi, String tipus_reserva, double tipus_IVA, double preu_total_reserva) {
         this.id_reserva = id_reserva;
-        this.id_persona = id_persona;
+        this.id_client = id_client;
         this.id_habitacio = id_habitacio;
         this.data_reserva = data_reserva;
         this.data_inici = data_inici;
@@ -41,12 +34,12 @@ public class Reserva {
         this.id_reserva = id_reserva;
     }
 
-    public int getId_persona() {
-        return id_persona;
+    public int getId_client() {
+        return id_client;
     }
 
-    public void setId_persona(int id_persona) {
-        this.id_persona = id_persona;
+    public void setId_client(int id_client) {
+        this.id_client = id_client;
     }
 
     public int getId_habitacio() {
@@ -57,27 +50,27 @@ public class Reserva {
         this.id_habitacio = id_habitacio;
     }
 
-    public Date getData_reserva() {
+    public LocalDate getData_reserva() {
         return data_reserva;
     }
 
-    public void setData_reserva(Date data_reserva) {
+    public void setData_reserva(LocalDate data_reserva) {
         this.data_reserva = data_reserva;
     }
 
-    public Date getData_inici() {
+    public LocalDate getData_inici() {
         return data_inici;
     }
 
-    public void setData_inici(Date data_inici) {
+    public void setData_inici(LocalDate data_inici) {
         this.data_inici = data_inici;
     }
 
-    public Date getData_fi() {
+    public LocalDate getData_fi() {
         return data_fi;
     }
 
-    public void setData_fi(Date data_fi) {
+    public void setData_fi(LocalDate data_fi) {
         this.data_fi = data_fi;
     }
 
@@ -104,9 +97,4 @@ public class Reserva {
     public void setPreu_total_reserva(double preu_total_reserva) {
         this.preu_total_reserva = preu_total_reserva;
     }
-
-    
-
-    
 }
-
